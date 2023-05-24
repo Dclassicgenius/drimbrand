@@ -34,46 +34,45 @@
                                         <th scope="col">Product</th>
                                         <th scope="col" width="120">Quantity</th>
                                         <th scope="col" width="120">Price</th>
+    
                                     </tr>
                                 </thead>
                                 <tbody>
+    
                                     {% for cart_item in cart_items %}
-                                        <tr>
-                                            <td>
-                                                <figure class="itemside align-items-center">
-                                                    <div class="aside">
-                                                        <img src="{{ cart_item.product.images.url }}" class="img-sm">
-                                                    </div>
-                                                    <figcaption class="info">
-                                                        <a href="{{ cart_item.product.get_url }}" class="title text-dark">{{
-                                                        cart_item.product.product_name }}</a>
-                                                        <p class="text-muted small">
-                                                            {% if cart_item.variations.all %}
-                                                                {% for item in cart_item.variations.all %}
-                                                                    {{ item.variation_category | capfirst }} : {{ item.variation_value |
-                                                                    capfirst }}
-                                                                    <br>
-                                                                {% endfor %}
-                                                            {% endif %}
-                                                        </p>
-                                                    </figcaption>
-                                                </figure>
-                                            </td>
-                                            <td>
-                                                <!-- col.// -->
-                                                <label for="">{{ cart_item.quantity }}</label>
-                                            </td>
-                                            <td>
-                                                <div class="price-wrap">
-                                                    <var class="price">$ {{ cart_item.sub_total }}</var>
-                                                    <small class="text-muted">$ {{ cart_item.product.price }} each</small>
-                                                </div>
-                                                <!-- price-wrap .// -->
-                                            </td>
-                                        </tr>
+                                    <tr>
+                                        <td>
+                                            <figure class="itemside align-items-center">
+                                                <div class="aside"><img src="{{ cart_item.product.images.url }}" class="img-sm"></div>
+                                                <figcaption class="info">
+                                                    <a href="{{ cart_item.product.get_url }}" class="title text-dark">{{ cart_item.product.product_name }}</a>
+                                                    <p class="text-muted small">
+                                                        {% if cart_item.variations.all %}
+                                                        {% for item in cart_item.variations.all %}
+                                                        {{ item.variation_category | capfirst }} : {{ item.variation_value | capfirst }} <br>
+                                                        {% endfor %}
+                                                        {% endif %}
+                                                    </p>
+                                                </figcaption>
+                                            </figure>
+                                        </td>
+                                        <td>
+                                            <!-- col.// -->
+                                            <label for="">{{cart_item.quantity}}</label>
+                                        </td>
+                                        <td>
+                                            <div class="price-wrap">
+                                                <var class="price">₽ {{ cart_item.sub_total }}</var>
+                                                <small class="text-muted"> ₽ {{ cart_item.product.price }} each </small>
+                                            </div> <!-- price-wrap .// -->
+                                        </td>
+    
+                                    </tr>
                                     {% endfor %}
+    
                                 </tbody>
                             </table>
+    
                         </div>
                     </div>
                 </aside>
@@ -84,19 +83,19 @@
                             <dl class="dlist-align">
                                 <dt>Total price:</dt>
                                 <dd class="text-right">
-                                    $ {{ total }}
+                                    ₽ {{ total }}
                                 </dd>
                             </dl>
                             <dl class="dlist-align">
                                 <dt>Tax:</dt>
                                 <dd class="text-right">
-                                    $ {{ tax }}
+                                    ₽ {{ tax }}
                                 </dd>
                             </dl>
                             <dl class="dlist-align">
                                 <dt>Grand Total:</dt>
                                 <dd class="text-right text-dark b">
-                                    <strong>$ {{ grand_total }}</strong>
+                                    <strong>₽ {{ grand_total }}</strong>
                                 </dd>
                             </dl>
                             <hr>
@@ -123,7 +122,6 @@
     </section>
     <!-- ========================= SECTION CONTENT END// ========================= -->
     <script>
-
     function getCookie(name) {
         let cookieValue = null;
         if (document.cookie && document.cookie !== '') {
@@ -189,6 +187,8 @@
                     })
                         .then((response) => response.json())
                         .then((data) => {
+                            console.log("Redirect URL:", redirect_url + '?order_number=' + data.order_number + '&payment_id=' + data.transID);
+
                             window.location.href = redirect_url + '?order_number=' + data.order_number + '&payment_id=' + data.transID;
                         });
                 }

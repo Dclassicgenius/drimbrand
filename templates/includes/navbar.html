@@ -80,20 +80,31 @@
                 <!-- col.// -->
                 <div class="col-lg-3 col-sm-6 col-8 order-2 order-lg-3">
                     <div class="d-flex justify-content-end mb-3 mb-lg-0">
-                        {% if user.id is None %}
+                        {% if user.is_authenticated %}
+                            {% if user.is_superuser %}
+                                <!-- do not show the Dashboard -->
+                                <div class="widget-header">
+                                    <small class="title text-muted">Welcome {{ user.first_name }}!</small>
+                                    <div>
+                                        {% comment %} <a href="{% url 'dashboard' %}">Dashboard</a> <span class="dark-transp">|</span> {% endcomment %}
+                                        <a href="{% url 'logout' %}">Logout</a>
+                                    </div>
+                                </div>
+                            {% else %}
+                                <div class="widget-header">
+                                    <small class="title text-muted">Welcome {{ user.first_name }}!</small>
+                                    <div>
+                                        <a href="{% url 'dashboard' %}">Dashboard</a> <span class="dark-transp">|</span>
+                                        <a href="{% url 'logout' %}">Logout</a>
+                                    </div>
+                                </div>
+                            {% endif %}
+                        {% else %}
                             <div class="widget-header">
                                 <small class="title text-muted">Welcome guest!</small>
                                 <div>
                                     <a href="{% url 'login' %}">Sign in</a> <span class="dark-transp">|</span>
                                     <a href="{% url 'register' %}">Register</a>
-                                </div>
-                            </div>
-                        {% else %}
-                            <div class="widget-header">
-                                <small class="title text-muted">Welcome {{ user.first_name }}!</small>
-                                <div>
-                                    <a href="{% url 'dashboard' %}">Dashboard</a> <span class="dark-transp">|</span>
-                                    <a href="{% url 'logout' %}">Logout</a>
                                 </div>
                             </div>
                         {% endif %}
@@ -106,6 +117,7 @@
                     </div>
                     <!-- widgets-wrap.// -->
                 </div>
+                
                 <!-- col.// -->
             </div>
             <!-- row.// -->

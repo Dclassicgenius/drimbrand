@@ -54,6 +54,9 @@ INSTALLED_APPS = [
 
 ]
 
+SESSION_ENGINE = 'django.contrib.sessions.backends.db'
+
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -136,7 +139,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-MEDIA_URL = "/images/"
+MEDIA_URL = "/media/"
 
 # STATICFILES_DIRS = [
 #     os.path.join(BASE_DIR, 'static')
@@ -156,6 +159,15 @@ GRAPH_MODELS = {
     "all_applications": True,
     "graph_models": True,
 }
+
+# SMTP configuration
+
+EMAIL_USE_TLS = config("EMAIL_USE_TLS", default=True, cast=bool)
+EMAIL_PORT = config("EMAIL_PORT", cast=int)
+EMAIL_HOST = config("EMAIL_HOST")
+EMAIL_HOST_USER = config("EMAIL_HOST_USER")
+EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD")
+EMAIL_BACKEND = config("EMAIL_BACKEND")
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [

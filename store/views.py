@@ -78,6 +78,7 @@ def product_detail(request, category_slug, product_slug):
     }
     return render(request, "store/product_detail.html", context)
 
+
 def search(request):
     if "keyword" in request.GET:
         keyword = request.GET["keyword"]
@@ -92,6 +93,8 @@ def search(request):
         "product_count": product_count,
     }
     return render(request, "store/store.html", context)
+
+
 
 def submit_review(request, product_id):
     url = request.META.get("HTTP_REFERER")
