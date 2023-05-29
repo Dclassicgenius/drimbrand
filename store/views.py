@@ -9,7 +9,7 @@ from store.forms import ReviewForm
 from .models import Product, ProductGallery, ReviewRating
 from orders.models import OrderProduct
 from category.models import Category
-from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
+from django.core.paginator import Paginator
 
 
 # Create your views here.
@@ -22,7 +22,7 @@ def store(request, category_slug=None):
     if category_slug != None:
         categories = get_object_or_404(Category, slug=category_slug)
         products = Product.objects.filter(category=categories, is_available=True)
-        paginator = Paginator(products, 1)
+        paginator = Paginator(products, 6)
         page = request.GET.get("page")
         paged_products = paginator.get_page(page)
 
